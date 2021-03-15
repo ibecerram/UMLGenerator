@@ -4,6 +4,7 @@ public class main
 {
 	public static void main(String[] args) 
 	{
+		ArrayList<Clase> listaClases = new ArrayList<>();
 		Scanner sc = new Scanner(System.in);
 		String nombreArchivo;
 
@@ -19,15 +20,21 @@ public class main
 			archivo.buscarMetodos();
 			archivo.buscarVariables();*/
 			//archivo.leer();
-			archivo.obtenerClase();
-			System.out.println("\n**************************************");
+			listaClases.addAll(archivo.obtenerClase());
+			//System.out.println("\n**************************************");
 
-			Clase clase;
+			/*Clase clase;
 			clase = archivo.getClase();
-			clase.mostrarClase();
+			clase.mostrarClase();*/
 			System.out.println("Deseas leer otro archivo? 1 = SI.");
 			opcion = sc.nextInt();
 			sc.nextLine();
+		}
+
+		for(Clase clase : listaClases)
+		{
+			clase.mostrarClase();
+			System.out.println("----------------------------------------");
 		}
 	}
 

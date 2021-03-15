@@ -15,9 +15,11 @@ Rueda::Rueda(string n)
 void Rueda::printRueda()
  {cout <<nombre<<"\n";};
 
+///////////////////////////
 class Bicicleta 
 {
-	private: Rueda *r[2]; //puntero
+	private: 
+		Rueda *r[2]; //puntero
 	public:
 		Bicicleta();
 		Bicicleta(Rueda *r1, Rueda *r2);

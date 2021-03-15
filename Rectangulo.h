@@ -1,4 +1,4 @@
-class Rectangulo { 
+class Rectangulo : Figura2D { 
 	private:
 		TipoRectangulo TR;
 		int base;

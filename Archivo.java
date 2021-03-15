@@ -6,8 +6,10 @@ public class Archivo
 	private String nombreArchivo;
 	private ArrayList<Variable> listaVariables = new ArrayList<>();
 	private ArrayList<Metodo> listaMetodos = new ArrayList<>();
-	private ArrayList<String> clasesDisponibles = new ArrayList<>();
+	//private ArrayList<String> clasesDisponibles = new ArrayList<>();
+	HashMap <Integer, Integer> mapLimitesClases = new HashMap<>();
 	private Clase clase;
+	private ArrayList<Clase> listaClases = new ArrayList<>();
 
 	public Archivo(String nombreArchivo)
 	{
@@ -50,8 +52,10 @@ public class Archivo
 	public void analizar()
 	{
 		boolean bandera = false;
-		String prueba = "";
+		//String prueba = "";
 		int n = 1;
+		int limiteInferior = 0;
+		int limiteSuperior = 0;
 		int linea;
 		try
 		{
@@ -63,7 +67,8 @@ public class Archivo
 				if(lineaArchivo.contains("class"))
 				{
 					bandera = true;
-					prueba += String.valueOf(n) + "|";
+					//prueba += String.valueOf(n) + "|";
+					limiteInferior = n;
 				}
 
 				if(bandera)
@@ -71,10 +76,12 @@ public class Archivo
 					if(lineaArchivo.contains("};"))
 					{
 						bandera = false;
-						prueba += String.valueOf(n);
+						//prueba += String.valueOf(n);
 						//System.out.println("CLASE DE: " + prueba);
-						clasesDisponibles.add(prueba);
-						prueba = "";
+						limiteSuperior = n;
+						//clasesDisponibles.add(prueba);
+						//prueba = "";
+						mapLimitesClases.put(limiteInferior, limiteSuperior); 
 					}
 				}
 				/*//System.out.println(lineaArchivo);
@@ -104,8 +111,9 @@ public class Archivo
 		}*/
 	}
 
-	public void buscarNombre()
+	public void buscarNombre(int limiteInferior, int limiteSuperior)
 	{
+		int n = 1;
 		try
 		{
 			File file = new File(this.nombreArchivo);
@@ -113,12 +121,28 @@ public class Archivo
 			while(reader.hasNextLine())
 			{
 				String lineaArchivo = reader.nextLine();
-				if(lineaArchivo.contains("class"))
+
+				if(n >= limiteInferior && n<= limiteSuperior)
 				{
-					lineaArchivo = depurarString(lineaArchivo);
-					//System.out.println("\nNombre clase: " + lineaArchivo);
-					clase = new Clase(lineaArchivo);
+					if(lineaArchivo.contains("class"))
+					{
+						lineaArchivo = depurarString(lineaArchivo);
+						if(lineaArchivo.contains(":"))
+						{
+							String[] split = lineaArchivo.split(":");
+							clase = new Clase(depurarString(split[0]));
+							clase.setHerencia(depurarString(split[1]));
+						}
+						else
+						{
+							//System.out.println("\nNombre clase: " + lineaArchivo);
+							clase = new Clase(lineaArchivo);
+						}
+						
+					}
 				}
+				n++;
+					
 			}
 			reader.close();
 		}
@@ -129,8 +153,9 @@ public class Archivo
 		}
 	}
 
-	public void buscarMetodos()
+	public void buscarMetodos(int limiteInferior, int limiteSuperior)
 	{
+		int n = 1;
 		this.listaMetodos.clear();
 		boolean banderaMetodo = false;
 		try
@@ -141,19 +166,25 @@ public class Archivo
 			{
 				String lineaArchivo = reader.nextLine();
 
-				if(lineaArchivo.contains("private:") || lineaArchivo.contains("};"))
+				if(n >= limiteInferior && n<= limiteSuperior)
 				{
-					banderaMetodo = false;
+					//System.out.println(lineaArchivo);
+					if(lineaArchivo.contains("private:") || lineaArchivo.contains("};"))
+					{
+						banderaMetodo = false;
+					}
+					if(banderaMetodo)
+					{
+						lineaArchivo = depurarString(lineaArchivo);
+						this.agregarMetodo(lineaArchivo);
+					}
+					if(lineaArchivo.contains("public:"))
+					{
+						banderaMetodo = true;
+					}	
 				}
-				if(banderaMetodo)
-				{
-					lineaArchivo = depurarString(lineaArchivo);
-					this.agregarMetodo(lineaArchivo);
-				}
-				if(lineaArchivo.contains("public:"))
-				{
-					banderaMetodo = true;
-				}				
+
+				n++;							
 			}
 			reader.close();
 		}
@@ -173,8 +204,9 @@ public class Archivo
 
 	}
 
-	public void buscarVariables()
+	public void buscarVariables(int limiteInferior, int limiteSuperior)
 	{
+		int n = 1;
 		this.listaVariables.clear();
 		boolean banderaMetodo = false;
 		try
@@ -184,20 +216,25 @@ public class Archivo
 			while(reader.hasNextLine())
 			{
 				String lineaArchivo = reader.nextLine();
-				if(lineaArchivo.contains("public:") || lineaArchivo.contains("};"))
+
+				if(n >= limiteInferior && n<= limiteSuperior)
 				{
-					banderaMetodo = false;
+					//System.out.println(lineaArchivo);
+					if(lineaArchivo.contains("public:") || lineaArchivo.contains("};"))
+					{
+						banderaMetodo = false;
+					}
+					if(banderaMetodo)
+					{
+						lineaArchivo = depurarString(lineaArchivo);
+						this.agregarVariable(lineaArchivo);
+					}
+					if(lineaArchivo.contains("private:"))
+					{
+						banderaMetodo = true;
+					}
 				}
-				if(banderaMetodo)
-				{
-					lineaArchivo = depurarString(lineaArchivo);
-					this.agregarVariable(lineaArchivo);
-				}
-				if(lineaArchivo.contains("private:"))
-				{
-					banderaMetodo = true;
-				}	
-				
+				n++;
 			}
 			reader.close();
 		}
@@ -253,24 +290,39 @@ public class Archivo
 		
 	}
 
-	public void obtenerClase()
+	public ArrayList<Clase> obtenerClase()
 	{
-		String split[];
-		for(String string : clasesDisponibles)
+		//String split[];
+		//for(String string : clasesDisponibles)
+		for(Map.Entry<Integer, Integer> map : mapLimitesClases.entrySet())
 		{
-			split = string.split("\\|");
+			//split = string.split("\\|");
 			//System.out.println(split[0] + " y " + split[1]);
-			this.leer(Integer.parseInt(split[0]), Integer.parseInt(split[1]));
-			System.out.println("\n\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
+			int limiteInferior = map.getKey();
+			int limiteSuperior = map.getValue();
+			//this.leer(limiteInferior, limiteSuperior);
+			//System.out.println("\n\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n\n");
+			this.buscarNombre(limiteInferior, limiteSuperior);
+			this.buscarVariables(limiteInferior, limiteSuperior);
+			this.buscarMetodos(limiteInferior, limiteSuperior);
+			listaClases.add(clase);
 		}
+
+		/*for(Clase clase : listaClases)
+		{
+			clase.mostrarClase();
+			System.out.println("\n***************************************\n");
+		}*/
+
+		return listaClases;
 	}
-	public Clase getClase()
+	/*public Clase getClase()
 	{
 		this.buscarNombre();
 		this.buscarVariables();
 		this.buscarMetodos();
 		return clase;
-	}
+	}*/
 }
 
 //Hacer un if para que guarde un string desde que encuentra un "class" hasta un ";}"
