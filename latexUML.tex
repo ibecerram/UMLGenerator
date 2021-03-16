@@ -1,0 +1,41 @@
+\documentclass[a4paper,11pt, svgnames]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{tikz-uml}
+
+\begin{document}
+
+\begin{tikzpicture}
+\umlclass[x=0, y = 0]{A}
+{
+	n : unit \\r : const float
+}
+{
+	+ setA(i : int) : void \\getA() : A
+}
+
+\umlclass[x = 0, y = 5]{B}
+{
+	n : unit \\r : const float
+}
+{
+	+ setA(i int) : void \\getA() : A
+}
+
+\umlclass[x = 5, y = 5]{C}
+{
+	n : unit \\r : const float
+}
+{
+	+ setA(i int) : void \\getA() : A
+}
+
+\umluniaggreg[arg2=z, mult=1]{A}{B}
+
+\umluniaggreg[arg2=z, mult=1]{C}{B}
+
+\end{tikzpicture}
+\end{document}

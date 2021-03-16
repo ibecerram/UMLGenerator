@@ -47,4 +47,9 @@ public class Clase
 		}
 
 	}
+
+	public String getNombre()
+	{
+		return this.nombre;
+	}
 }

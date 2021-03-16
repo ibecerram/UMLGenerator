@@ -36,6 +36,10 @@ public class main
 			clase.mostrarClase();
 			System.out.println("----------------------------------------");
 		}
+
+		Latex latex = new Latex("prueba", listaClases);
+		latex.crearArchivo();
+		latex.escribir();
 	}
 
 	//Encontrar varios ejemplos como .h para que funcione
