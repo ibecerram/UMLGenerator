@@ -12,7 +12,7 @@ public class main
 		int opcion = 1;
 		while(opcion == 1)
 		{
-			System.out.println("Teclea el nombre del archivo con su extensión: ");
+			System.out.println("\nTeclea el nombre del archivo con su extensión: ");
 			nombreArchivo = sc.nextLine();
 			Archivo archivo = new Archivo(nombreArchivo);
 			//archivo.leer();
@@ -27,16 +27,16 @@ public class main
 			/*Clase clase;
 			clase = archivo.getClase();
 			clase.mostrarClase();*/
-			System.out.println("Deseas leer otro archivo? 1 = SI.");
+			System.out.println("\n¿Deseas leer otro archivo? 1 = SI.");
 			opcion = sc.nextInt();
 			sc.nextLine();
 		}
 
-		for(Clase clase : listaClases)
+		/*for(Clase clase : listaClases)
 		{
 			clase.mostrarClase();
 			System.out.println("----------------------------------------");
-		}
+		}*/
 
 		Latex latex = new Latex("diagramaClases", listaClases);
 		latex.crearArchivo();
@@ -46,19 +46,19 @@ public class main
 		{
 			Process p = Runtime.getRuntime().exec("pdflatex diagramaClases.tex");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-			/*String line = "";
-			while((line = reader.readLine()) != null)
-			{
-				System.out.println(line + "\n");
-			}*/
+			System.out.println("\n <<<< GENERANDO ARCHIVO PDF... >>>>\n");
 
 			p.waitFor();
 		}
 		catch(Exception e)
 		{
+			System.out.println("\n <<<< OCURRIÓ UN PROBLEMA AL GENERAR EL PDF >>>>\n");
 			e.printStackTrace();
 		}
+
+		System.out.println("\n************************************************* \n");
+		System.out.println("\n <<<< ¡DIAGRAMA GENERADO EXITOSAMENTE! >>>>\n");
+		System.out.println("\n # Archivo diagramaClases.pdf creado en la carpeta actual #\n");
 		
 	}
 

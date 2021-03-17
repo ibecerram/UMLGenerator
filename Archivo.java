@@ -290,6 +290,9 @@ public class Archivo
 			{
 				//System.out.println("CONTIENE UNA COMPOSICIÓN EN:" + division[0] + "x");
 				//System.out.println("NOMBRE CLASE:" + clase.getNombre() + "x");
+				division[0] = division[0].replace("*", "");
+				division[0] = division[0].replace("**", "");
+				division[0] = division[0].replace("***", "");
 				this.listaComposiciones.add(division[0]);
 			}
 			

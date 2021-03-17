@@ -6,8 +6,8 @@ using namespace std;
 class Zoo{
 	private:
 		char* name;
-		Animal arrayAnimales[30];
-		Empleados arrayEmpleados[30];
+		Animal* arrayAnimales[30];
+		Empleados* arrayEmpleados[30];
 	public:
 		Zoo(string n);
 		void getZoo();

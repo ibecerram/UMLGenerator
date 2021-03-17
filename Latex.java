@@ -127,15 +127,15 @@ public class Latex
 				this.listaComposiciones.addAll(clase.getComposiciones());
 				for(String composicion : listaComposiciones)
 				{
-					System.out.println("Hay una composicion" + clase.getNombre() +  "-" + composicion);
+					//System.out.println("Hay una composicion" + clase.getNombre() +  "-" + composicion);
 					bw.write(uml.crearComposicion(clase.getNombre(), composicion));
 					bw.newLine();
 				}
 				this.listaComposiciones.clear();
-				System.out.println("Entro a una clase");
+				//System.out.println("Entro a una clase");
 			}
 
-			System.out.println("Saliendo...");
+			//System.out.println("\n <<<< GENERANDO ARCHIVO PDF... >>>>\n");
 			bw.write(uml.finalizarDocumento());
 			bw.close();
 		}
