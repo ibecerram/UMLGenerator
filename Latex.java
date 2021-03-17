@@ -127,8 +127,29 @@ public class Latex
 				this.listaComposiciones.addAll(clase.getComposiciones());
 				for(String composicion : listaComposiciones)
 				{
+					boolean bandera = false;
+					for(Clase buscarClase : listaClases)
+					{
+						if(buscarClase.getNombre().equals(composicion))
+						{
+							bandera = true;
+						}
+					}
+
+					if(bandera)
+					{
+						System.out.println("Si entra");
+						bw.write(uml.crearComposicion(clase.getNombre(), composicion));
+					}
+					else
+					{
+						System.out.println("\nERROR: La clase contiene composiciones de clases que NO fueron encontradas. \nFavor de ingresar todos los archivos");
+						System.out.println("El diagrama generará una composicion con la misma clase.");
+						System.out.println("Le pedimos que agregue todos los archivos de C++ con extensión .cpp\n");
+						bw.write(uml.crearComposicion(clase.getNombre(), clase.getNombre()));
+					}
 					//System.out.println("Hay una composicion" + clase.getNombre() +  "-" + composicion);
-					bw.write(uml.crearComposicion(clase.getNombre(), composicion));
+					
 					bw.newLine();
 				}
 				this.listaComposiciones.clear();

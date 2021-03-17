@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class Metodo
 {
 	private String tipoRetorno;
@@ -7,6 +9,7 @@ public class Metodo
 	{
 		this.tipoRetorno = tipoRetorno;
 		this.nombre = nombre;
+		//this.formatoNombre();
 	}
 
 	public void setTipoRetorno(String tipoRetorno)
@@ -17,6 +20,7 @@ public class Metodo
 	public void setNombre(String nombre)
 	{
 		this.nombre = nombre;
+		
 	}
 
 	public String getTipoRetorno()
@@ -46,5 +50,19 @@ public class Metodo
 			return "+ " + this.nombre + " : " + this.tipoRetorno; 
 		}
 		
+	}
+
+	public void formatoNombre()
+	{
+		System.out.println("Entra al Metodo");
+		/*if(!this.nombre.contains("(s)"))
+		{
+			/*String[] division = this.nombre.split("(");
+			String[] variables = division[1].split(",");
+			for(int i = 0; i < variables.length; i++)
+			{
+				System.out.println(variables[i]);
+			}
+		}*/
 	}
 }
