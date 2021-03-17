@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class main
 {
@@ -37,19 +38,49 @@ public class main
 			System.out.println("----------------------------------------");
 		}
 
-		Latex latex = new Latex("prueba", listaClases);
+		Latex latex = new Latex("diagramaClases", listaClases);
 		latex.crearArchivo();
 		latex.escribir();
+
+		try
+		{
+			Process p = Runtime.getRuntime().exec("pdflatex diagramaClases.tex");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+			/*String line = "";
+			while((line = reader.readLine()) != null)
+			{
+				System.out.println(line + "\n");
+			}*/
+
+			p.waitFor();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 	}
 
-	//Encontrar varios ejemplos como .h para que funcione
-	//PROBAR CON HERENCIA (un metodo que analice la linea de nombre y que:
-		//Si encuentra un : que entonces Hay herencia y la primera parte es la hija
-		//Y la 2da es el padre
-	//Ver cómo se crea una clase con tikz uml
-	//Ver cómo se hacen las relaciones en tikzuml
-	//Hacer una ArrayList de Clases
-	//Probar con varios archivos
-	//Ver cómo lo vamos a realizar
-	//Preguntarle a Leo cómo le hará su equipo
+	//Falta HERENCIA************
+	//Falta Composiciones******************
+	//Probar comando para generar PDF
+	//Ver CÖMO se acomoda en latex con tikz
+	//Ver si se mete en un package o algo?????????????????????
+	//Ver adornos de latex para que funcione
+	//Faltan las relaciones
+	//Las COORDENADAS desde donde empieza el diagrama para acomodar
+	//Es desde la esquina inferior izquierda
 }
+
+//https://mkyong.com/java/how-to-execute-shell-command-from-java/
+
+/*
+1) CREAR RELACIONES DE HERENCIA
+2) CREAR COMPOSICIONES
+3) ADORNAR
+
+
+
+
+*/

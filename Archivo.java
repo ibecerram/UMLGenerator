@@ -6,14 +6,25 @@ public class Archivo
 	private String nombreArchivo;
 	private ArrayList<Variable> listaVariables = new ArrayList<>();
 	private ArrayList<Metodo> listaMetodos = new ArrayList<>();
+	private ArrayList<String> listaComposiciones = new ArrayList<>();
 	//private ArrayList<String> clasesDisponibles = new ArrayList<>();
 	HashMap <Integer, Integer> mapLimitesClases = new HashMap<>();
 	private Clase clase;
 	private ArrayList<Clase> listaClases = new ArrayList<>();
+	private ArrayList<String> tiposDeDatos = new ArrayList<>();
 
 	public Archivo(String nombreArchivo)
 	{
 		this.nombreArchivo = nombreArchivo;
+		this.tiposDeDatos.add("int");
+		this.tiposDeDatos.add("char");
+		this.tiposDeDatos.add("char*");
+		this.tiposDeDatos.add("float");
+		this.tiposDeDatos.add("double");
+		this.tiposDeDatos.add("long");
+		this.tiposDeDatos.add("short");
+		this.tiposDeDatos.add("string");
+		this.tiposDeDatos.add("void");
 	}
 
 	public void leer(int limiteInferior, int limiteSuperior)
@@ -208,6 +219,7 @@ public class Archivo
 	{
 		int n = 1;
 		this.listaVariables.clear();
+		this.listaComposiciones.clear();
 		boolean banderaMetodo = false;
 		try
 		{
@@ -251,6 +263,7 @@ public class Archivo
 		}
 		//System.out.println(todosLosbanderaMetodos);*/
 		clase.setVariables(listaVariables);
+		clase.setComposiciones(listaComposiciones);
 	}
 
 	public String depurarString(String linea)
@@ -270,6 +283,17 @@ public class Archivo
 	{
 		String[] division = linea.split(" ", 2);
 		listaVariables.add(new Variable(division[0], division[1]));
+		//Verificar composición
+		if(!this.tiposDeDatos.contains(division[0]))
+		{
+			if(!division[0].equals(clase.getNombre()))
+			{
+				//System.out.println("CONTIENE UNA COMPOSICIÓN EN:" + division[0] + "x");
+				//System.out.println("NOMBRE CLASE:" + clase.getNombre() + "x");
+				this.listaComposiciones.add(division[0]);
+			}
+			
+		}
 	}
 
 	public void agregarMetodo(String linea)
@@ -279,16 +303,70 @@ public class Archivo
 			String[] division = linea.split(" ", 2);
 			if(division.length >= 2)
 			{
-				listaMetodos.add(new Metodo(division[0], division[1]));
+				//listaMetodos.add(new Metodo(division[0], division[1]));
+				if(division[0].contains("(") || division[0].contains(")"))
+				{
+					listaMetodos.add(new Metodo("", linea));
+					//System.out.println("ENTRO EN (((((()))) = " + division[0]);
+				}
+				else
+				{
+					listaMetodos.add(new Metodo(division[0], division[1]));
+					//System.out.println("ENTRO EN aca= " + division[0]);
+				}
 			}
 			else
+			{
+				listaMetodos.add(new Metodo("", linea));
+				//System.out.println("Entro en else= " + division[0]);
+			}
+			/*
+			else
+			{
+				if(division[0].contains(")"))
+				{
+					listaMetodos.add(new Metodo("", division[0]));
+				}
+				else
+				{
+					listaMetodos.add(new Metodo(division[0], division[1]));
+				}
+			}
+			*/
+			
+		}
+		
+	}
+	/*
+		public void agregarMetodo(String linea)
+	{
+		if(!linea.isEmpty())
+		{
+			if(!this.tiposDeDatos.contains(linea))
+			{
+				if(linea.equals(clase.getNombre()))
+				{
+					listaMetodos.add(new Metodo("", linea));
+				}
+			}
+			else
+			{
+				String[] division = linea.split(" ", 2);
+				if(division.length >= 2)
+				{
+					listaMetodos.add(new Metodo(division[0], division[1]));
+				}
+			}
+			
+			/*else
 			{
 				listaMetodos.add(new Metodo("", division[0]));
 			}
 			
 		}
 		
-	}
+	}*/
+
 
 	public ArrayList<Clase> obtenerClase()
 	{

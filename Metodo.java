@@ -1,6 +1,6 @@
 public class Metodo
 {
-	private String tipoRetorno = "";
+	private String tipoRetorno;
 	private String nombre;
 
 	public Metodo(String tipoRetorno, String nombre)
@@ -32,5 +32,19 @@ public class Metodo
 	public String toString()
 	{
 		return this.tipoRetorno + " " + this.nombre;
+	}
+
+	public String getFormatoUml()
+	{
+		if(tipoRetorno.isEmpty())
+		{
+			//System.out.println("Entro aqui en " + nombre);
+			return "+ " + this.nombre;
+		}
+		else
+		{
+			return "+ " + this.nombre + " : " + this.tipoRetorno; 
+		}
+		
 	}
 }

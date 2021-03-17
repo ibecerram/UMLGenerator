@@ -33,4 +33,9 @@ public class Variable
 	{
 		return this.tipoDeDato + " " + this.identificador;
 	}
+
+	public String getFormatoUml()
+	{
+		return this.identificador + " : " + this.tipoDeDato;
+	}
 }

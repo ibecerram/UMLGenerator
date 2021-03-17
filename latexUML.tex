@@ -5,11 +5,13 @@
 \usepackage{listings}
 \usepackage{fancyvrb}
 \usepackage{tikz-uml}
+\usepackage[margin=1.0in]{geometry}
 
 \begin{document}
 
 \begin{tikzpicture}
-\umlclass[x=0, y = 0]{A}
+\begin{umlpackage}[x=0, y=0]{DiagramaUML}
+\umlclass{A}
 {
 	n : unit \\r : const float
 }
@@ -25,17 +27,20 @@
 	+ setA(i int) : void \\getA() : A
 }
 
-\umlclass[x = 5, y = 5]{C}
+\umlclass[x = 0, y = 10]{C}
 {
 	n : unit \\r : const float
 }
 {
-	+ setA(i int) : void \\getA() : A
+	+ setA(i int) : void \\
+	+ getA() : A \\
+	+ prueba() : AAAA
 }
 
 \umluniaggreg[arg2=z, mult=1]{A}{B}
 
 \umluniaggreg[arg2=z, mult=1]{C}{B}
-
+\end{umlpackage}
 \end{tikzpicture}
 \end{document}
+

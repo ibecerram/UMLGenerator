@@ -19,16 +19,16 @@ public class Latex
 		try
 		{
 			file = new File(this.nombre);
-			if(!file.exists())
+			/*if(!file.exists())
 			{
 				file.createNewFile();
 				System.out.println("Archivo creando");
-			}
+			}*/
 
-			/*FileWriter fw = new FileWriter(file);
+			FileWriter fw = new FileWriter(file);
 			BufferedWriter bw = new BufferedWriter(fw);
-			bw.write("holaaaa");
-			bw.close();*/
+			bw.write(uml.encabezadoDocumento());
+			bw.close();
 		}
 		catch(Exception e)
 		{
@@ -38,12 +38,27 @@ public class Latex
 
 	public void escribir()
 	{
+		int x = 0, y = 0;
+		int contador = 1;
 		try
 		{
 			FileWriter fw = new FileWriter(file, true);
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.newLine();
-			bw.write("prueba2");
+			for(Clase clase : listaClases)
+			{
+				if(contador >= 4)
+				{
+					y += 10;
+					contador = 1;
+					x = 0;
+				}
+				bw.write(uml.crearClase(clase, x, y));
+				x += 10;
+				contador++;
+				bw.newLine();
+			}
+			bw.write(uml.finalizarDocumento());
 			bw.close();
 		}
 		catch(Exception e)
@@ -51,13 +66,6 @@ public class Latex
 			System.out.println("Error al escribir latex");
 		}
 
-		//System.out.println("CREANDO CLASE: " + uml.crearClase("A"));
-
-		for(Clase clase : listaClases)
-		{
-			//clase.mostrarClase();
-			System.out.println(uml.crearClase(clase, 1, 2));
-		}
 	}
 }
 
@@ -67,3 +75,5 @@ https://beginnersbook.com/2014/01/how-to-append-to-a-file-in-java/
 https://www.journaldev.com/881/java-append-to-file
 https://www.baeldung.com/java-append-to-file
 */
+
+//AGREGAR ZOO//EMPLEADOS//ANIMALES
