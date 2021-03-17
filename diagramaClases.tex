@@ -6,15 +6,20 @@
 \usepackage{fancyvrb}
 \usepackage{tikz-uml}
 \usepackage[margin=0.5in]{geometry}
+\title{Diagrama Generado de Clases C++}
+\author{\vspace{-2cm}}
+\date{\vspace{-1cm}\today}
 \begin{document}
+\maketitle
+\begin{center}
 \begin{tikzpicture}
 \begin{umlpackage}[x=0, y=0]{diagramaClasesUML}
 
 \umlclass[x=0, y = 0]{Zoo}
 {
 name : char* \\
-arrayAnimales[30] : Animales* \\
-arrayEmpleados[30] : Empleados* \\
+arrayAnimales[30] : Animal \\
+arrayEmpleados[30] : Empleados \\
 
 }
 {
@@ -77,6 +82,14 @@ habitat : int \\
 + habitat(int a) : char* \\ 
 
 }
+
+\umlinherit{Leon}{Mamifero}
+\umlinherit{Vertebrados}{Animal}
+\umlinherit{Mamifero}{Vertebrados}
+
+\umlcompo{Zoo}{Animal}
+\umlcompo{Zoo}{Empleados}
 \end{umlpackage}
 \end{tikzpicture}
+\end{center}
 \end{document}

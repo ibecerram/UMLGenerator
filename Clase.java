@@ -3,7 +3,7 @@ import java.util.*;
 public class Clase
 {
 	private String nombre;
-	private String herencia;
+	private String herencia = "";
 	private ArrayList<Variable> listaVariables = new ArrayList<>();
 	private ArrayList<Metodo> listaMetodos = new ArrayList<>();
 	private ArrayList<String> listaComposiciones = new ArrayList<>();
@@ -38,7 +38,7 @@ public class Clase
 
 	public void mostrarClase()
 	{
-		System.out.println("Nombre clase: " + this.nombre);
+		System.out.println("Nombre clase: x" + this.nombre + "x");
 		System.out.println("Herencia: " + this.herencia);
 		System.out.println("\nMetodos:");
 		for(Metodo metodo : listaMetodos)
@@ -73,5 +73,15 @@ public class Clase
 	public ArrayList<Metodo> getMetodos()
 	{
 		return this.listaMetodos;
+	}
+
+	public ArrayList<String> getComposiciones()
+	{
+		return this.listaComposiciones;
+	}
+
+	public String getHerencia()
+	{
+		return this.herencia;
 	}
 }

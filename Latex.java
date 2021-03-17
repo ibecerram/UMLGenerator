@@ -7,6 +7,7 @@ public class Latex
 	private File file;
 	private Uml uml = new Uml();
 	private ArrayList<Clase> listaClases = new ArrayList<>();
+	private ArrayList<String> listaComposiciones = new ArrayList<>();
 
 	public Latex(String nombre, ArrayList<Clase> listaClases)
 	{
@@ -58,7 +59,7 @@ public class Latex
 				contador++;
 				bw.newLine();
 			}
-			bw.write(uml.finalizarDocumento());
+			//bw.write(uml.finalizarDocumento());
 			bw.close();
 		}
 		catch(Exception e)
@@ -66,6 +67,83 @@ public class Latex
 			System.out.println("Error al escribir latex");
 		}
 
+		this.escribirRelaciones();
+		this.escribirComposiciones();
+	}
+
+	public void escribirRelaciones()
+	{
+		//this.listaComposiciones.clear();
+		try
+		{
+			FileWriter fw = new FileWriter(file, true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.newLine();
+			for(Clase clase : listaClases)
+			{
+				//System.out.println("Entra");
+				//System.out.println("Herencia: " + clase.getHerencia());
+				if(!clase.getHerencia().isEmpty())
+				{
+					//System.out.println("Entra aqui en herencia");
+					bw.write(uml.crearHerencia(clase.getNombre(), clase.getHerencia()));
+					bw.newLine();
+				}
+			}
+
+			/*for(Clase clase : listaClases)
+			{
+				this.listaComposiciones.addAll(clase.getComposiciones());
+				for(String composicion : listaComposiciones)
+				{
+					System.out.println("Hay una composicion");
+					bw.write(uml.crearHerencia(clase.getNombre(), composicion));
+					bw.newLine();
+				}
+				this.listaComposiciones.clear();
+				System.out.println("Entro a una clase");
+			}*/
+
+			//System.out.println("Saliendo...");
+			//bw.write(uml.finalizarDocumento());
+			bw.close();
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error al escribir en Relaciones");
+			e.printStackTrace();
+		}
+	}
+
+	public void escribirComposiciones()
+	{
+		try
+		{
+			FileWriter fw = new FileWriter(file, true);
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.newLine();
+			for(Clase clase : listaClases)
+			{
+				this.listaComposiciones.addAll(clase.getComposiciones());
+				for(String composicion : listaComposiciones)
+				{
+					System.out.println("Hay una composicion" + clase.getNombre() +  "-" + composicion);
+					bw.write(uml.crearComposicion(clase.getNombre(), composicion));
+					bw.newLine();
+				}
+				this.listaComposiciones.clear();
+				System.out.println("Entro a una clase");
+			}
+
+			System.out.println("Saliendo...");
+			bw.write(uml.finalizarDocumento());
+			bw.close();
+		}
+		catch(Exception e)
+		{
+			System.out.println("Error al escribir en Relaciones");
+			e.printStackTrace();
+		}
 	}
 }
 

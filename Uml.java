@@ -22,7 +22,12 @@ public class Uml
 		codigoUml += "\\usepackage{fancyvrb}\n";
 		codigoUml += "\\usepackage{tikz-uml}\n";
 		codigoUml += "\\usepackage[margin=0.5in]{geometry}\n";
+		codigoUml += "\\title{Diagrama Generado de Clases C++}\n";
+		codigoUml += "\\author{\\vspace{-2cm}}\n";
+		codigoUml += "\\date{\\vspace{-1cm}\\today}\n";
 		codigoUml += "\\begin{document}\n";
+		codigoUml += "\\maketitle\n";
+		codigoUml += "\\begin{center}\n";
 		codigoUml += "\\begin{tikzpicture}\n";
 		codigoUml += "\\begin{umlpackage}[x=0, y=0]{diagramaClasesUML}\n";
 		return codigoUml;
@@ -59,15 +64,22 @@ public class Uml
 		return codigoUml;
 	}
 
-	public String crearHerencia()
+	public String crearComposicion(String claseObjetivo, String claseInstancia)
 	{
 		codigoUml = "";
+		codigoUml += "\\umlcompo";
+		codigoUml += "[arg1=1, arg2=n]\n";
+		codigoUml += "{" + claseObjetivo + "}" + "{" + claseInstancia + "}";
 		return codigoUml;
 	}
 
-	public String crearComposicion()
+	public String crearHerencia(String claseHija, String clasePadre)
 	{
-
+		codigoUml = "";
+		codigoUml += "\\umlinherit";
+		//codigoUml += "[arg2=z, mult=1]\n";
+		codigoUml += "{" + claseHija + "}" + "{" + clasePadre + "}";
+		return codigoUml;
 	}
 	
 	public String finalizarDocumento()
@@ -75,6 +87,7 @@ public class Uml
 		codigoUml = "";
 		codigoUml += "\\end{umlpackage}\n";
 		codigoUml += "\\end{tikzpicture}\n";
+		codigoUml += "\\end{center}\n";
 		codigoUml += "\\end{document}";
 
 		return codigoUml;
