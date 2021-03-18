@@ -138,7 +138,7 @@ public class Latex
 
 					if(bandera)
 					{
-						System.out.println("Si entra");
+						//System.out.println("Si entra");
 						bw.write(uml.crearComposicion(clase.getNombre(), composicion));
 					}
 					else

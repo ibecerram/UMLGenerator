@@ -8,11 +8,16 @@ public class main
 		ArrayList<Clase> listaClases = new ArrayList<>();
 		Scanner sc = new Scanner(System.in);
 		String nombreArchivo;
-
 		int opcion = 1;
+		System.out.println("**************************************************\n");
+		System.out.println(" ### GENERADOR DE DIAGRAMA DE CLASES EN UML ###");
+		System.out.println("\nDebes ingresar los archivos .cpp correspondientes al lenguaje C++.");
+		System.out.println("Favor de ingresar solamente los archivos necesarios\nDe lo contrario, se podría generar un error.");
+		System.out.println("\n**************************************************\n");
+
 		while(opcion == 1)
 		{
-			System.out.println("\nTeclea el nombre del archivo con su extensión: ");
+			System.out.println("\nTeclea el nombre del archivo con su extensión (.cpp): ");
 			nombreArchivo = sc.nextLine();
 			Archivo archivo = new Archivo(nombreArchivo);
 			//archivo.leer();

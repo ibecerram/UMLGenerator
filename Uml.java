@@ -22,7 +22,7 @@ public class Uml
 		codigoUml += "\\usepackage{fancyvrb}\n";
 		codigoUml += "\\usepackage{tikz-uml}\n";
 		codigoUml += "\\usepackage[margin=0.5in]{geometry}\n";
-		codigoUml += "\\title{Diagrama Generado de Clases C++}\n";
+		codigoUml += "\\title{Diagrama de Clases C++ Generado}\n";
 		codigoUml += "\\author{\\vspace{-2cm}}\n";
 		codigoUml += "\\date{\\vspace{-1cm}\\today}\n";
 		codigoUml += "\\begin{document}\n";

@@ -9,7 +9,7 @@ public class Metodo
 	{
 		this.tipoRetorno = tipoRetorno;
 		this.nombre = nombre;
-		//this.formatoNombre();
+		this.formatoNombre();
 	}
 
 	public void setTipoRetorno(String tipoRetorno)
@@ -54,15 +54,48 @@ public class Metodo
 
 	public void formatoNombre()
 	{
-		System.out.println("Entra al Metodo");
-		/*if(!this.nombre.contains("(s)"))
+		String formato = "";
+		String variablesFormato = "";
+		//String[] division[0] = "s";
+		String primeraParte = "";
+		//System.out.println("Entra al Metodo");
+		if(!this.nombre.contains("\\(\\)"))
 		{
-			/*String[] division = this.nombre.split("(");
+			//System.out.println("ENTRO AL FOR");
+			String formateo = this.nombre.replace("\\)", "");
+			String[] division = this.nombre.split("\\(");
+			primeraParte = division[0];
 			String[] variables = division[1].split(",");
 			for(int i = 0; i < variables.length; i++)
 			{
-				System.out.println(variables[i]);
+				variables[i] = variables[i].replaceAll("\\)", "");
+				if(!variables[i].isEmpty())
+				{
+					//System.out.println(variables[i] +  " entra aqui");
+					variables[i] = variables[i].trim();
+					String[] divisionVariable = variables[i].split(" ");
+					//System.out.println(divisionVariable[1] + " parte 2");
+					//System.out.println(divisionVariable[0] + " parte 1");
+					variablesFormato += divisionVariable[1] + " : " + divisionVariable[0];
+					if(i != variables.length -1)
+					{
+						variablesFormato += ", ";
+					}
+				}
+
 			}
-		}*/
+		}
+
+		if(variablesFormato.isEmpty())
+		{
+			variablesFormato = this.nombre;
+		}
+		else
+		{
+			variablesFormato = primeraParte + "(" + variablesFormato + ")";
+		}
+
+		//System.out.println("Variables como: " + variablesFormato);
+		this.nombre = variablesFormato;
 	}
 }
